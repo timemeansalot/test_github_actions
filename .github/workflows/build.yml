@@ -11,5 +11,5 @@ jobs:
       - name: Get Verilog Top # cat all verilog files into one file
         run: |
           touch top.v
-          cat {{github.workspace}}/vsrc/*.v > top.v
+          cat ${{github.workspace}}/vsrc/*.v > top.v
           cat top.v
