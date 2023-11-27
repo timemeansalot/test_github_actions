@@ -1,10 +1,15 @@
 name: github CI(Continuous Integration)
 on: push
 jobs:
-  first_job:
-    name: Demo1
+  build-project:
+    name: Build-Project # job name which will show in Github
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
     container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
-      - run: node --version
-      - run: npm --version
+      - name: Checkout Codes # clone all Github codes to container
+        uses: actions/checkout@v2
+      - name: Get Verilog Top # cat all verilog files into one file
+        run: |
+          touch top.v
+          cat {{github.workspace}}/vsrc/*.v > top.v
+          cat top.v
