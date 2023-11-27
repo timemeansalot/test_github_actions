@@ -19,7 +19,12 @@ jobs:
           touch top.v
           cat ${{ github.workspace }}/vsrc/*.v > top.v
           cat top.v
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+      - name: release the top file
+        uses: djnicholson/release-action@v2.11
+        with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            release-name: 'Latest rolling build'
+            tag-name: 'v1.3-alpha'
+            asset-name: 'chisel2verilog'
+            file: top.v
       - run: echo "🍏 This job's status is ${{ job.status }}."
