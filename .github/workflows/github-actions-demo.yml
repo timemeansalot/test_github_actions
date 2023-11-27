@@ -16,6 +16,8 @@ jobs:
       - name: find all the Verilog files and cat into one file
         run: |
           ls ${{ github.workspace }}/vsrc  
+          echo "cat all verilog files into 1 single file"
+          cat ${{ github.workspace }}/vsrc/*.v top.v
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
