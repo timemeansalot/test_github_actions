@@ -2,7 +2,9 @@ name: github CI(Continuous Integration)
 on: push
 jobs:
   first_job:
+    name: Demo1
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
+    container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
       - run: node --version
       - run: npm --version
