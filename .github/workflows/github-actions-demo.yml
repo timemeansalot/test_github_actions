@@ -29,9 +29,9 @@ jobs:
     #   - run: echo "🍏 This job's status is ${{ job.status }}."
     steps:
           - name: get names
-            run |
-             echo ${{ secrets.GITHUB_TOKEN }}
-             echo ${{ github.ref }}
+            run: |
+              echo ${{ secrets.GITHUB_TOKEN }}
+              echo ${{ github.ref }}
           - name: Checkout code
             uses: actions/checkout@v4
           - name: Create Release
