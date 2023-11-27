@@ -1,7 +1,8 @@
+name: github CI(Continuous Integration)
 on: push
 jobs:
   first_job:
-    runs-on: ubuntu-latest # define the OS which the jobs runs on
+    runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
     steps: # define a list of steps of this job
       - run: node --version
       - run: npm --version
