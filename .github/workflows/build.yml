@@ -1,7 +1,7 @@
 on: push
-runs-on: ubuntu-latest
 jobs:
   first_job:
-    steps:
+    runs-on: ubuntu-latest # define the OS which the jobs runs on
+    steps: # define a list of steps of this job
       - run: node --version
       - run: npm --version
