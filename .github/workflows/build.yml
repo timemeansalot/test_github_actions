@@ -14,8 +14,19 @@ jobs:
           touch top.v
           cat ${{ github.workspace }}/vsrc/*.v > top.v
           cat top.v
-      - name: Upload Verilog File # upload top.v file
+      - name: Upload Verilog File # upload top.v file, the file can be found in Github Actions Page, we can download it
         uses: actions/upload-artifact@v2
         with:
-          name: verilog-file
-          path: top.v 
+          name: verilog-file # this name will be used later
+          path: top.v
+  release-project:
+    name: Release-Project
+    runs-on: ubuntu-latest
+    needs: build-project # dependency project
+    steps:
+      - name: Download Verilog content
+        uses: actions/download-artifact@v2
+        with:
+          name: verilog-file # set download target
+      - name: View content # show all contents in download file
+        run: ls -R
