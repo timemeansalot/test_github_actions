@@ -14,8 +14,8 @@ jobs:
           touch top.v
           cat ${{ github.workspace }}/vsrc/*.v > top.v
           cat top.v
-      - name: Upload Verilog File
+      - name: Upload Verilog File # upload top.v file
         uses: actions/upload-artifact@v2
-          with:
-            name: static-site
-            path: top.v 
+        with:
+          name: verilog-file
+          path: top.v 
