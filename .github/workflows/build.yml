@@ -14,9 +14,9 @@
 
 name: github CI for GHost repository
 on: 
-  push:
-    tags: # trigger when push with a tag
-      - '**'
+  push
+    # tags: # trigger when push with a tag
+    #   - '**'
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
     name: Build-Project # job name which will show in Github
@@ -56,16 +56,16 @@ jobs:
         with:
           # tag_name: $GITHUB_REF_NAME
           # release_name: Release $GITHUB_REF_NAME
-          tag_name: TAG_NAME
-          release_name: RELEASE_NAME
-          # tag_name: ${{ github.run_number }}
-          # release_name: Release ${{ github.run_number }}
-#       - name: Upload release asset
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-#           asset_path: ./top.v # source file for release
-# 3         asset_name: verilog-top.v # name of release
-#           asset_content_type: application/zip
+          # tag_name: TAG_NAME
+          # release_name: RELEASE_NAME
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./top.v # source file for release
+          asset_name: verilog-top.v # name of release
+          asset_content_type: application/zip
