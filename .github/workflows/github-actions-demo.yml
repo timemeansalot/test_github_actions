@@ -16,7 +16,7 @@ jobs:
       - name: find all the Verilog files and cat into one file
         run: |
           ls ${{ github.workspace }}/vsrc  
-          cat ${{ github.workspace }}/vsrc/alu.v > top.v
+          cat ${{ github.workspace }}/vsrc/alu.v >> ${{ github.workspace }}/vsrc/divider.v
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
