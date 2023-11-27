@@ -1,4 +1,4 @@
-name=$(shell date | grep -Eo "\d+:\d+:\d+")
+name=$(shell date | grep -Eo "\d+:\d+:\d+" | sed 's/:/_/g')
 
 .PHONE: all
 
