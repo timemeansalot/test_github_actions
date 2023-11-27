@@ -4,12 +4,13 @@ jobs:
   build-project:
     name: Build-Project # job name which will show in Github
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
-    container: node:17.6.0 # setup node version in docker container
+    # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
       - name: Checkout Codes # clone all Github codes to container
         uses: actions/checkout@v2
       - name: Get Verilog Top # cat all verilog files into one file
         run: |
+          ls ${{ github.workspace }}/vsrc  
           touch top.v
-          cat ${{github.workspace}}/vsrc/*.v > top.v
+          cat ${{ github.workspace }}/vsrc/*.v > top.v
           cat top.v
