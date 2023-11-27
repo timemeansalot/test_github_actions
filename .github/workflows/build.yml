@@ -6,7 +6,8 @@ jobs:
     name: Get_Tag_Name
     runs-on: ubuntu-latest
     steps:
-      run: echo ${{ github.ref }}
+      - name: Echo Tag Name
+        run: echo {{ github.ref }}
 # name: github CI for GHost repository
 # on: 
 #   push:
