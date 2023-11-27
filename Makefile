@@ -7,4 +7,5 @@ all:
 	git add --all
 	git commit -m ${name}
 	git push
+	git tag ${name}
 	git push origin ${name}
