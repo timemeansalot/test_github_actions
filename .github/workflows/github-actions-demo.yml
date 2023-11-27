@@ -28,6 +28,10 @@ jobs:
     #         file: ${{ github.workspace }}/vsrc/alu.v
     #   - run: echo "🍏 This job's status is ${{ job.status }}."
     steps:
+          - name: get names
+          - run |
+             echo ${{ secrets.GITHUB_TOKEN }}
+             echo ${{ github.ref }}
           - name: Checkout code
             uses: actions/checkout@v4
           - name: Create Release
@@ -35,3 +39,8 @@ jobs:
             uses: actions/create-release@v1
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            with:
+              tag_name: ${{ github.ref }}
+              release_name: Release ${{ github.ref }}
+              draft: false
+              prerelease: false
