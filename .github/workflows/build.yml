@@ -1,9 +1,9 @@
 name: github CI(Continuous Integration)
-on:
-  push:
-    # Pattern matched against refs/tags
-    tags:        
-      - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
+on: push
+  # push:
+  #   # Pattern matched against refs/tags
+  #   tags:        
+  #     - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
     permissions: write-all # git permissions to this job or you can't create a release in the following step
