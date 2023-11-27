@@ -17,7 +17,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}/vsrc  
           echo "cat all verilog files into 1 single file"
-          cat ${{ github.workspace }}/vsrc/*.v top.v
+          cat ${{ github.workspace }}/vsrc/*.v > top.v
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
