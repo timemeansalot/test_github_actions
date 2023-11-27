@@ -1,5 +1,8 @@
 name: github CI(Continuous Integration)
-on: push
+on: 
+  push:
+    tag:
+      - '**'
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
     name: Build-Project # job name which will show in Github
