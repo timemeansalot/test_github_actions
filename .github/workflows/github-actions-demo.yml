@@ -19,6 +19,11 @@ jobs:
           touch top.v
           cat ${{ github.workspace }}/vsrc/*.v > top.v
           cat top.v
+      # add this file to github repository
+          git add top.v 
+          git commit -m 'add from action'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
