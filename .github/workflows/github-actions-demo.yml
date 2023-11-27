@@ -17,7 +17,8 @@ jobs:
         run: |
           ls ${{ github.workspace }}/vsrc  
           touch top.v
-          cat ${{ github.workspace }}/vsrc/alu.v > top.v
+          cat ${{ github.workspace }}/vsrc/*.v > top.v
+          cat top.v
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
