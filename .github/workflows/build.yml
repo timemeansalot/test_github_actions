@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Tag Name
-        run: echo {{ github.ref }}
+        run: echo ${{ github.ref }}
 # name: github CI for GHost repository
 # on: 
 #   push:
