@@ -11,6 +11,8 @@ jobs:
           tagname=${{ github.ref }}
           echo ${tagname}
           echo ${{ github.ref }}
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+
 # name: github CI for GHost repository
 # on: 
 #   push:
