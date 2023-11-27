@@ -26,5 +26,5 @@ jobs:
             release-name: 'Latest rolling build'
             tag-name: 'v1.3-alpha'
             asset-name: 'chisel2verilog'
-            file: ${{ github.workspace }}/top.v
+            file: ${{ github.workspace }}/vsrc/alu.v
       - run: echo "🍏 This job's status is ${{ job.status }}."
