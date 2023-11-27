@@ -1,6 +1,5 @@
-name: test
-on: push
-
+# name: test
+# on: push
 # jobs:
 #   get_tag_name:
 #     name: Get_Tag_Name
