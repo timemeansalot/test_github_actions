@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
       - name: find all the Verilog files and cat into one file
         run: |
-          ls ${{ github.workspace }/vsrc}  
+          ls ${{ github.workspace }}/vsrc  
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
