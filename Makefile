@@ -9,5 +9,4 @@ all:
 	@echo ${name}
 	@git add --all
 	@git commit -m ${name}
-	@git tag ${name}
-	@git push origin ${name}
+	@git push

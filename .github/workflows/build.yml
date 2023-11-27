@@ -1,22 +1,5 @@
-# name: test
-# on: push
-# jobs:
-#   get_tag_name:
-#     name: Get_Tag_Name
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Echo Tag Name
-#         run: |
-#           tagname=${{ github.ref }}
-#           echo ${tagname}
-#           echo ${{ github.ref }}
-#           echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-
-name: github CI for GHost repository
-on: 
-  push
-    # tags: # trigger when push with a tag
-    #   - '**'
+name: github CI(Continuous Integration)
+on: push
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
     name: Build-Project # job name which will show in Github
@@ -54,10 +37,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # tag_name: $GITHUB_REF_NAME
-          # release_name: Release $GITHUB_REF_NAME
-          # tag_name: TAG_NAME
-          # release_name: RELEASE_NAME
           tag_name: ${{ github.run_number }}
           release_name: Release ${{ github.run_number }}
       - name: Upload release asset
