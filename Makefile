@@ -11,6 +11,7 @@ all:
 	@git add --all
 	@git commit -m ${name}
 	@git tag ${name}
+	@git push
 	@git push origin ${name}
 
 # all:
