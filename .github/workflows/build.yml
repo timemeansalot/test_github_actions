@@ -45,5 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: ./top.v
-          asset_name: verilog-top.v
+          asset_path: ./top.v # source file for release
+          asset_name: verilog-top.v # name of release
+          asset_content_type: application/zip
