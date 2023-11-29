@@ -14,7 +14,12 @@ jobs:
       - name: Checkout Codes # clone all Github codes to container
         uses: actions/checkout@v2
       - name: get Tag Name
-        run: echo ${GITHUB_REF#refs/tags/}
+        run: |
+          echo ${GITHUB_REF#refs/tags/}
+          TagName=${GITHUB_REF#refs/tags/}
+          echo "below is tag name"
+          echo ${TagName}
+
 
 # name: github CI(Continuous Integration)
 # on:
