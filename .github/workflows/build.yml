@@ -20,7 +20,14 @@ jobs:
           echo "below is tag name"
           echo ${TagName}
           mid_part=$(echo "$TagName" | sed 's/^.*-\(.*\)-.*$/\1/')
+      - name: use above local variable
+        run: |
           echo "Middle part: $mid_part"
+          if [ "$mid_part" = "kernel" ]; then
+              echo "The strings are equal to kernel."
+          else
+              echo "The strings are not equal."
+          fi
 
 
 # name: github CI(Continuous Integration)
