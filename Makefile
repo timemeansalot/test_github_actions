@@ -1,5 +1,5 @@
 # name=$(shell date | grep -Eo "\d+:\d+:\d+" | sed 's/:/_/g')
-name=cc_aa
+name=Action_Kernel_Version
 
 .PHONE: all
 
