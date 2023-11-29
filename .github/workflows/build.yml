@@ -37,14 +37,12 @@ jobs:
           name: verilog-file # this name will be used later
           path: top.v
   release-project: # second job: download Verilog file and Create a Github Release
-    permissions: write-all # git permissions to this job or you can't create a release in the following step
+    # permissions: write-all # git permissions to this job or you can't create a release in the following step
     name: Release-Project
     runs-on: ubuntu-latest
     needs: build-project # dependency project
     steps:
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - name: Tag Midterm Name
+      - name: Get Tage Name 
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Download Verilog content
         uses: actions/download-artifact@v2
@@ -68,4 +66,4 @@ jobs:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
           asset_path: ./top.v # source file for release
           asset_name: verilog-top.v # name of release
-          asset_content_type: application/zip
+          asset_content_type: text/plain
