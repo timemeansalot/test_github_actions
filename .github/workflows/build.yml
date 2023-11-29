@@ -84,6 +84,8 @@ jobs:
         #   GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         # with:
         #   title: ${{ env.RELEASE_VERSION }}
+      - name: show url 
+        run: echo ${{ steps.create-new-release.outputs.html_url}}
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
         env:
