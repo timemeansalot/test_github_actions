@@ -19,6 +19,8 @@ jobs:
           TagName=${GITHUB_REF#refs/tags/}
           echo "below is tag name"
           echo ${TagName}
+          mid_part=$(echo "$TagName" | sed 's/^.*-\(.*\)-.*$/\1/')
+          echo "Middle part: $mid_part"
 
 
 # name: github CI(Continuous Integration)
