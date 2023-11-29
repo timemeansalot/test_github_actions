@@ -18,7 +18,7 @@ jobs:
           echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
       - name: Checkout Codes # clone all Github codes to container
-        uses: actions/checkout
+        uses: actions/checkout@v4
       - name: Main Step to get Verilog Top # cat all verilog files into one file
         run: |
           ls ${{ github.workspace }}/vsrc  
