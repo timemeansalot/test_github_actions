@@ -1,10 +1,8 @@
 # name=$(shell date | grep -Eo "\d+:\d+:\d+" | sed 's/:/_/g')
-# name=Action_Kernel_Version1
 # name=release-msm-version
-name=release-ntt-version2
+name=release-ntt-version3
 # name=release-kernel-version15
 # name=release-kernel-version15
-# name=action-aa-cc
 
 .PHONE: all
 
