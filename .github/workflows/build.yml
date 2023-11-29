@@ -20,6 +20,7 @@ jobs:
           echo "below is tag name"
           echo ${TagName}
           mid_part=$(echo "$TagName" | sed 's/^.*-\(.*\)-.*$/\1/')
+          echo $mid_part >> $GITHUB_ENV
       - name: use above local variable
         run: |
           echo "Middle part: $mid_part"
