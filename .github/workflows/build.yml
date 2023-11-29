@@ -10,7 +10,7 @@ jobs:
       env:
         # GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         # GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        GH_TOKEN: ${{ github.token }}
       with:
         title: MyReleaseMessage
 # name: github CI(Continuous Integration)
