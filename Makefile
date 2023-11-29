@@ -1,6 +1,6 @@
 # name=$(shell date | grep -Eo "\d+:\d+:\d+" | sed 's/:/_/g')
 # name=release-msm-version
-name=release-ntt-version5
+name=release-ntt-version6
 # name=release-kernel-version15
 # name=release-kernel-version15
 

@@ -45,7 +45,7 @@ jobs:
       - name: Get Tage Name 
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Download Verilog content
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: verilog-file # set download target
       - name: View content # show all contents in download file
