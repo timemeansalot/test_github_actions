@@ -11,26 +11,30 @@ jobs:
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
     # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
-      - name: Checkout Codes # clone all Github codes to container
-        uses: actions/checkout@v2
-      - name: get Tag Name
-        id: extract-tag
-        run: |
-          echo ${GITHUB_REF#refs/tags/}
-          TagName=${GITHUB_REF#refs/tags/}
-          echo "below is tag name"
-          echo ${TagName}
-          mid_part=$(echo "$TagName" | sed 's/^.*-\(.*\)-.*$/\1/')
-          echo $mid_part >> $GITHUB_ENV
-          run: echo "RELEASE_VERSION=$mid_part" >> $GITHUB_ENV
-      - name: use above local variable
-        run: |
-          echo "Middle part: ${{ env.RELEASE_VERSION }}"
-          if [ ${{ env.RELEASE_VERSION }} = "kernel" ]; then
-              echo "The strings are equal to kernel."
-          else
-              echo "The strings are not equal."
-          fi
+      - name: Set Variable in Step 1
+        run: echo "MY_VARIABLE=Hello, GitHub Actions!" >> $GITHUB_ENV
+      - name: Use Variable in Step 2
+        run: echo "Using Variable: $MY_VARIABLE"
+      # - name: Checkout Codes # clone all Github codes to container
+      #   uses: actions/checkout@v2
+      # - name: get Tag Name
+      #   id: extract-tag
+      #   run: |
+      #     echo ${GITHUB_REF#refs/tags/}
+      #     TagName=${GITHUB_REF#refs/tags/}
+      #     echo "below is tag name"
+      #     echo ${TagName}
+      #     mid_part=$(echo "$TagName" | sed 's/^.*-\(.*\)-.*$/\1/')
+      #     echo $mid_part >> $GITHUB_ENV
+      #     run: echo "RELEASE_VERSION=$mid_part" >> $GITHUB_ENV
+      # - name: use above local variable
+      #   run: |
+      #     echo "Middle part: ${{ env.RELEASE_VERSION }}"
+      #     if [ ${{ env.RELEASE_VERSION }} = "kernel" ]; then
+      #         echo "The strings are equal to kernel."
+      #     else
+      #         echo "The strings are not equal."
+      #     fi
 
 
 # name: github CI(Continuous Integration)
