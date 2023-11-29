@@ -67,9 +67,11 @@ jobs:
         run: |
           ls ${{ github.workspace }}/vsrc  
           touch top.v
-          if [ ${MID_PART} = "kernel" ]; then
+          if [ ${MID_PART} = "msm" ]; then
+              echo "cat sms into top"
               cat ${{ github.workspace }}/vsrc/msm.v > top.v
           else
+              echo "cat ntt into top"
               cat ${{ github.workspace }}/vsrc/ntt.v > top.v
           fi
           # cat ${{ github.workspace }}/vsrc/*.v > top.v
