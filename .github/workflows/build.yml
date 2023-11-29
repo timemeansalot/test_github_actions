@@ -22,11 +22,11 @@ jobs:
           echo ${TagName}
           mid_part=$(echo "$TagName" | sed 's/^.*-\(.*\)-.*$/\1/')
           echo $mid_part >> $GITHUB_ENV
-          echo "::set-output name=MID_PART::$(echo $mid_part)"
+          run: echo "RELEASE_VERSION=$mid_part" >> $GITHUB_ENV
       - name: use above local variable
         run: |
-          echo "Middle part: ${{ steps.extract-tag.outputs.MID_PART }}"
-          if [ ${{ steps.extract-tag.outputs.MID_PART }} = "kernel" ]; then
+          echo "Middle part: ${{ env.RELEASE_VERSION }}"
+          if [ ${{ env.RELEASE_VERSION }} = "kernel" ]; then
               echo "The strings are equal to kernel."
           else
               echo "The strings are not equal."
