@@ -11,38 +11,20 @@ jobs:
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
     # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
-      - name: Set Variable in Step 1
+      - name: Get Tag Name
         run: |
-          echo "MY_VARIABLE=Hello, GitHub Actions!" >> $GITHUB_ENV
-          TagName=${GITHUB_REF#refs/tags/}
-          mid_part=$(echo "$TagName" | sed 's/^.*-\(.*\)-.*$/\1/')
+          tag_name=${GITHUB_REF#refs/tags/}
+          mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
+          echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
-      - name: Use Variable in Step 2
+      - name: actions
         run: |
-          echo ${MY_VARIABLE}
           echo ${MID_PART}
-
-      # - name: Checkout Codes # clone all Github codes to container
-      #   uses: actions/checkout@v2
-      # - name: get Tag Name
-      #   id: extract-tag
-      #   run: |
-      #     echo ${GITHUB_REF#refs/tags/}
-      #     TagName=${GITHUB_REF#refs/tags/}
-      #     echo "below is tag name"
-      #     echo ${TagName}
-      #     mid_part=$(echo "$TagName" | sed 's/^.*-\(.*\)-.*$/\1/')
-      #     echo $mid_part >> $GITHUB_ENV
-      #     run: echo "RELEASE_VERSION=$mid_part" >> $GITHUB_ENV
-      # - name: use above local variable
-      #   run: |
-      #     echo "Middle part: ${{ env.RELEASE_VERSION }}"
-      #     if [ ${{ env.RELEASE_VERSION }} = "kernel" ]; then
-      #         echo "The strings are equal to kernel."
-      #     else
-      #         echo "The strings are not equal."
-      #     fi
-
+          if [ ${MID_PART} = "kernel" ]; then
+              echo "The number is greater than 5."
+          else
+              echo "The number is not greater than 5."
+          fi
 
 # name: github CI(Continuous Integration)
 # on:
@@ -57,6 +39,12 @@ jobs:
 #     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
 #     # container: node:17.6.0 # setup node version in docker container
 #     steps: # define a list of steps of this job
+#       - name: Get Tag Name
+#         run: |
+#           tag_name=${GITHUB_REF#refs/tags/}
+#           mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
+#           echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
+#           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
 #       - name: Checkout Codes # clone all Github codes to container
 #         uses: actions/checkout@v2
 #       - name: Get Verilog Top # cat all verilog files into one file
