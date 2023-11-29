@@ -87,12 +87,12 @@ jobs:
         #   title: ${{ env.RELEASE_VERSION }}
       - name: show url 
         run: echo ${{ steps.create-new-release.outputs.html_url}}
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: ./top.v # source file for release
-          asset_name: verilog-top.v # name of release
-          asset_content_type: text/plain
+      # - name: Upload release asset
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+      #     asset_path: ./top.v # source file for release
+      #     asset_name: verilog-top.v # name of release
+      #     asset_content_type: text/plain
