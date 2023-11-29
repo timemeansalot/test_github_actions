@@ -1,5 +1,5 @@
 # name=$(shell date | grep -Eo "\d+:\d+:\d+" | sed 's/:/_/g')
-name=bb_cc_aa
+name=cc_aa
 
 .PHONE: all
 
