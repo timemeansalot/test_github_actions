@@ -7,7 +7,7 @@ on:
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
     permissions: write-all # git permissions to this job or you can't create a release in the following step
-    name: Build-Project # job name which will show in Github
+    name: build-project # job name which will show in Github
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
     # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
@@ -38,7 +38,7 @@ jobs:
           path: top.v
   release-project: # second job: download Verilog file and Create a Github Release
     permissions: write-all # git permissions to this job or you can't create a release in the following step
-    name: Release-Project
+    name: release-project
     runs-on: ubuntu-latest
     needs: build-project # dependency project
     steps:
