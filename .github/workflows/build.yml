@@ -4,13 +4,13 @@ on:
     # Pattern matched against refs/tags
     tags:        
       - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
-  jobs:
-    first_job:
-      name: FIRST_JOB
-      runs-on: push
-      steps:
-        - name: Test FIRST_JOB
-          run: echo "Hello Github Actions"
+jobs:
+  first_job:
+    name: FIRST_JOB
+    runs-on: push
+    steps:
+      - name: Test FIRST_JOB
+        run: echo "Hello Github Actions"
 # name: github CI(Continuous Integration)
 # on:
 #   push:
