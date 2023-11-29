@@ -32,7 +32,7 @@ jobs:
           fi
           # cat ${{ github.workspace }}/vsrc/*.v > top.v
       - name: Upload Verilog File # upload top.v file, the file can be found in Github Actions Page, we can download it
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: verilog-file # this name will be used later
           path: top.v
