@@ -15,6 +15,7 @@ jobs:
         run: echo "MY_VARIABLE=Hello, GitHub Actions!" >> $GITHUB_ENV
       - name: Use Variable in Step 2
         run: echo "Using Variable: $MY_VARIABLE"
+
       # - name: Checkout Codes # clone all Github codes to container
       #   uses: actions/checkout@v2
       # - name: get Tag Name
