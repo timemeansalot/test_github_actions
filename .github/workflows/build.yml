@@ -1,47 +1,3 @@
-name: github CI(Continuous Integration)
-on:
-  push:
-    # Pattern matched against refs/tags
-    tags:        
-      - 'release-\w+-\w+'           # Push events to match release-kernel-version  
-jobs:
-  build-project: # first job: create Verilog file and upload to Github Actions Page
-    permissions: write-all # git permissions to this job or you can't create a release in the following step
-    name: Build-Project # job name which will show in Github
-    runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
-    # container: node:17.6.0 # setup node version in docker container
-    steps: # define a list of steps of this job
-      - name: Get Tag Name
-        run: |
-          tag_name=${GITHUB_REF#refs/tags/}
-          mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
-          echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
-          echo "MID_PART=${mid_part}" >> $GITHUB_ENV
-      - name: actions
-        run: |
-          echo ${MID_PART}
-          if [ ${MID_PART} = "kernel" ]; then
-              echo "The number is greater than 5."
-          else
-              echo "The number is not greater than 5."
-          fi
-  second-project: # first job: create Verilog file and upload to Github Actions Page
-    permissions: write-all # git permissions to this job or you can't create a release in the following step
-    name: Build-Project # job name which will show in Github
-    needs: build-project # dependency project
-    runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
-    # container: node:17.6.0 # setup node version in docker container
-    steps: # define a list of steps of this job
-      - name: echo names
-        run: |
-          echo ${MID_PART}
-          if [ ${MID_PART} = "kernel" ]; then
-              echo "The number is greater than 5."
-          else
-              echo "The number is not greater than 5."
-          fi
-
-
 # name: github CI(Continuous Integration)
 # on:
 #   push:
@@ -61,49 +17,97 @@ jobs:
 #           mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
 #           echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
 #           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
-#       - name: Checkout Codes # clone all Github codes to container
-#         uses: actions/checkout@v2
-#       - name: Get Verilog Top # cat all verilog files into one file
+#       - name: actions
 #         run: |
-#           ls ${{ github.workspace }}/vsrc  
-#           touch top.v
-#           cat ${{ github.workspace }}/vsrc/*.v > top.v
-#           cat top.v
-#       - name: Upload Verilog File # upload top.v file, the file can be found in Github Actions Page, we can download it
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: verilog-file # this name will be used later
-#           path: top.v
-#   release-project: # second job: download Verilog file and Create a Github Release
+#           echo ${MID_PART}
+#           if [ ${MID_PART} = "kernel" ]; then
+#               echo "The number is greater than 5."
+#           else
+#               echo "The number is not greater than 5."
+#           fi
+#   second-project: # first job: create Verilog file and upload to Github Actions Page
 #     permissions: write-all # git permissions to this job or you can't create a release in the following step
-#     name: Release-Project
-#     runs-on: ubuntu-latest
+#     name: Build-Project # job name which will show in Github
 #     needs: build-project # dependency project
-#     steps:
-#       - name: Set env
-#         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-#       - name: Tag Midterm Name
-#         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-#       - name: Download Verilog content
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: verilog-file # set download target
-#       - name: View content # show all contents in download file
-#         run: ls -R
-#       - name: Create GitHub release # create a Github release
-#         id: create-new-release # set ID for this step, will be use later
-#         uses: actions/create-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           tag_name: ${{ env.RELEASE_VERSION }} 
-#           release_name: Release ${{ env.RELEASE_VERSION }} 
-#       - name: Upload release asset
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-#           asset_path: ./top.v # source file for release
-#           asset_name: verilog-top.v # name of release
-#           asset_content_type: application/zip
+#     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
+#     # container: node:17.6.0 # setup node version in docker container
+#     steps: # define a list of steps of this job
+#       - name: echo names
+#         run: |
+#           echo ${MID_PART}
+#           if [ ${MID_PART} = "kernel" ]; then
+#               echo "The number is greater than 5."
+#           else
+#               echo "The number is not greater than 5."
+#           fi
+
+
+name: github CI(Continuous Integration)
+on:
+  push:
+    # Pattern matched against refs/tags
+    tags:        
+      - 'release-\w+-\w+'           # Push events to match release-kernel-version  
+jobs:
+  build-project: # first job: create Verilog file and upload to Github Actions Page
+    permissions: write-all # git permissions to this job or you can't create a release in the following step
+    name: Build-Project # job name which will show in Github
+    runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
+    # container: node:17.6.0 # setup node version in docker container
+    steps: # define a list of steps of this job
+      - name: Get Tag Name
+        run: |
+          tag_name=${GITHUB_REF#refs/tags/}
+          mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
+          echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
+          echo "MID_PART=${mid_part}" >> $GITHUB_ENV
+      - name: Checkout Codes # clone all Github codes to container
+        uses: actions/checkout@v2
+      - name: Main Step to get Verilog Top # cat all verilog files into one file
+        run: |
+          ls ${{ github.workspace }}/vsrc  
+          touch top.v
+          if [ ${MID_PART} = "kernel" ]; then
+              cat ${{ github.workspace }}/vsrc/msm.v > top.v
+          else
+              cat ${{ github.workspace }}/vsrc/ntt.v > top.v
+          fi
+          # cat ${{ github.workspace }}/vsrc/*.v > top.v
+      - name: Upload Verilog File # upload top.v file, the file can be found in Github Actions Page, we can download it
+        uses: actions/upload-artifact@v2
+        with:
+          name: verilog-file # this name will be used later
+          path: top.v
+  release-project: # second job: download Verilog file and Create a Github Release
+    permissions: write-all # git permissions to this job or you can't create a release in the following step
+    name: Release-Project
+    runs-on: ubuntu-latest
+    needs: build-project # dependency project
+    steps:
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Tag Midterm Name
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Download Verilog content
+        uses: actions/download-artifact@v2
+        with:
+          name: verilog-file # set download target
+      - name: View content # show all contents in download file
+        run: ls -R
+      - name: Create GitHub release # create a Github release
+        id: create-new-release # set ID for this step, will be use later
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }} 
+          release_name: Release ${{ env.RELEASE_VERSION }} 
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./top.v # source file for release
+          asset_name: verilog-top.v # name of release
+          asset_content_type: application/zip
