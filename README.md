@@ -4,3 +4,5 @@
 - [x] compile Chisel files into Verilog files
 - [x] cat all verilog files into 1 single file
 - [x] make a new release in github repo
+
+xx
