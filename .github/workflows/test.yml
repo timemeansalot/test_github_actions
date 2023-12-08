@@ -15,3 +15,10 @@ jobs:
     steps: # define a list of steps of this job
       - name: Print the input tag to STDOUT
         run: echo  The tags are ${{ inputs.tags }} 
+      - name: Update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: inputs.tags 
+          body: |
+            **Edit:** Some additional info
+          reactions: eyes
