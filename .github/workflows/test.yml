@@ -1,5 +1,11 @@
 name: trigger by REST API
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+        tags:
+          description: 'Test scenario tags'
+          required: true
+          type: string
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
     permissions: write-all # git permissions to this job or you can't create a release in the following step
@@ -7,9 +13,5 @@ jobs:
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
     # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
-      - name: Get Tag Name
-        run: |
-          tag_name=${GITHUB_REF#refs/tags/}
-          mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
-          echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
-          echo "MID_PART=${mid_part}" >> $GITHUB_ENV
+      - name: Print the input tag to STDOUT
+        run: echo  The tags are ${{ inputs.tags }} 
