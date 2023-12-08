@@ -26,3 +26,11 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-or-update-comment
           reactions: '+1'
+      - name: Add reactions
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: 1846798505 
+          reactions: |
+            heart
+            hooray
+            laugh
