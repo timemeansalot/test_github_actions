@@ -2,9 +2,13 @@ name: trigger by REST API
 on: 
   workflow_dispatch:
     inputs:
-        tags:
-          description: 'Test scenario tags'
+        comment_id:
+          description: 'comment ID'
           required: true
+        author:
+          description: 'comment author'
+          required: true
+
 run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', 'first','second','third') || '' }}
 # run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', inputs.deployment_git_rev, inputs.environments, inputs.services) || '' }}
 jobs:
@@ -15,7 +19,8 @@ jobs:
     # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
       - name: Print the input tag to STDOUT
-        run: echo  The tags are ${{ inputs.tags }} 
+        run: echo  The comment_id is ${{ inputs.comment_id }} 
+        run: echo  The author is ${{ inputs.author }} 
       # - name: Create comment
       #   uses: peter-evans/create-or-update-comment@v3
       #   with:
@@ -27,15 +32,23 @@ jobs:
 
       #       [1]: https://github.com/peter-evans/create-or-update-comment
       #     reactions: '+1'
-      - name: Add reactions
-        uses: peter-evans/create-or-update-comment@v3
-        with:
-          # comment-id: 1849268462 
-          comment-id: inputs.tags # trigger workflow run failure 
-          reactions: |
-            hooray
-            hooray
-            hooray
-            hooray
-            hooray
-            hooray
+      # - name: Add reactions
+      #   uses: peter-evans/create-or-update-comment@v3
+      #   with:
+      #     # comment-id: 1849268462 
+      #     comment-id: inputs.comment_id # trigger workflow run failure 
+      #     reactions: |
+      #       hooray
+      #       hooray
+      #       hooray
+      #       hooray
+      #       hooray
+      #       hooray
+
+
+
+
+          inputs: {
+            comment_id: payload.comment.id.toString(), // invalid input type
+            author: payload.comment.user.login
+          },
