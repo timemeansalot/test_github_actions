@@ -44,11 +44,3 @@ jobs:
       #       hooray
       #       hooray
       #       hooray
-
-
-
-
-          inputs: {
-            comment_id: payload.comment.id.toString(), // invalid input type
-            author: payload.comment.user.login
-          },
