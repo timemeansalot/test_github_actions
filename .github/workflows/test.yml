@@ -16,17 +16,17 @@ jobs:
     steps: # define a list of steps of this job
       - name: Print the input tag to STDOUT
         run: echo  The tags are ${{ inputs.tags }} 
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v3
-        with:
-          issue-number: 22
-          body: |
-            This is a multi-line test comment
-            - With GitHub **Markdown** :sparkles:
-            - Created by [create-or-update-comment][1]
+      # - name: Create comment
+      #   uses: peter-evans/create-or-update-comment@v3
+      #   with:
+      #     issue-number: 22
+      #     body: |
+      #       This is a multi-line test comment
+      #       - With GitHub **Markdown** :sparkles:
+      #       - Created by [create-or-update-comment][1]
 
-            [1]: https://github.com/peter-evans/create-or-update-comment
-          reactions: '+1'
+      #       [1]: https://github.com/peter-evans/create-or-update-comment
+      #     reactions: '+1'
       - name: Add reactions
         uses: peter-evans/create-or-update-comment@v3
         with:
