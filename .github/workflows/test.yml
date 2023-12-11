@@ -12,7 +12,7 @@ on:
           description: 'comment ID'
           required: true
 
-run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', inputs.owner, inputs.repo, inputs.comment_id) || '' }}
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('{0}_{1}_{2}', inputs.owner, inputs.repo, inputs.comment_id) || '' }}
 # run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', inputs.deployment_git_rev, inputs.environments, inputs.services) || '' }}
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
