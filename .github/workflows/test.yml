@@ -2,14 +2,17 @@ name: trigger by REST API
 on: 
   workflow_dispatch:
     inputs:
+        owner:
+          description: 'comment owner'
+          required: true
+        repo:
+          description: 'comment repo'
+          required: true
         comment_id:
           description: 'comment ID'
           required: true
-        author:
-          description: 'comment author'
-          required: true
 
-run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', 'first','second','third') || '' }}
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', inputs.owner, inputs.repo, inputs.comment_id) || '' }}
 # run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', inputs.deployment_git_rev, inputs.environments, inputs.services) || '' }}
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
@@ -21,7 +24,8 @@ jobs:
       - name: Print the input tag to STDOUT
         run: | 
           echo  The comment_id is ${{ inputs.comment_id }} 
-          echo  The author is ${{ inputs.author }} 
+          echo  The owner is ${{ inputs.owner }} 
+          echo  The repo is ${{ inputs.repo }} 
       # - name: Create comment
       #   uses: peter-evans/create-or-update-comment@v3
       #   with:
