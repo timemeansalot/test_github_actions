@@ -30,7 +30,8 @@ jobs:
       - name: Add reactions
         uses: peter-evans/create-or-update-comment@v3
         with:
-          comment-id: inputs.tags 
+          comment-id: 1849268462 
+          # comment-id: inputs.tags 
           reactions: |
             hooray
             hooray
