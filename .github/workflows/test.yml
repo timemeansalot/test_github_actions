@@ -19,8 +19,9 @@ jobs:
     # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
       - name: Print the input tag to STDOUT
-        run: echo  The comment_id is ${{ inputs.comment_id }} 
-        run: echo  The author is ${{ inputs.author }} 
+        run: | 
+          echo  The comment_id is ${{ inputs.comment_id }} 
+          echo  The author is ${{ inputs.author }} 
       # - name: Create comment
       #   uses: peter-evans/create-or-update-comment@v3
       #   with:
