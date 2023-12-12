@@ -11,8 +11,11 @@ on:
         comment_id:
           description: 'comment ID'
           required: true
+        event_type:
+          description: 'comment ID'
+          required: true
 
-run-name: ${{ github.event_name == 'workflow_dispatch' && format('{0}|{1}|{2}', inputs.owner, inputs.repo, inputs.comment_id) || '' }}
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('{0}|{1}|{2}|{3}', inputs.owner, inputs.repo, inputs.comment_id, inputs.event_type) || '' }}
 # run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', inputs.deployment_git_rev, inputs.environments, inputs.services) || '' }}
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
@@ -23,12 +26,13 @@ jobs:
     steps: # define a list of steps of this job
       - name: Print the input tag to STDOUT
         run: | 
-          echo  The comment_id is ${{ inputs.comment_id }} 
           echo  The owner is ${{ inputs.owner }} 
           echo  The repo is ${{ inputs.repo }} 
+          echo  The comment_id is ${{ inputs.comment_id }} 
+          echo  The event_type is ${{ inputs.event_type }} 
       - name: Checkout Codes # clone all Github codes to container
         uses: actions/checkout@v4
-      - name: Main Step to get Verilog Top # cat all verilog files into one file
+      - name: cat README contents # cat all verilog files into one file
         run: |
           cat ${{ github.workspace }}/README.md  
       # - name: Create comment
