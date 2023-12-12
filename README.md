@@ -5,4 +5,16 @@
 - [x] cat all verilog files into 1 single file
 - [x] make a new release in github repo
 
-xx
+
+
+On Dev Branch
+On Dev Branch
+On Dev Branch
+On Dev Branch
+On Dev Branch
+On Dev Branch
+On Dev Branch
+On Dev Branch
+On Dev Branch
+On Dev Branch
+On Dev Branch
