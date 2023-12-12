@@ -1,5 +1,19 @@
 name: trigger by REST API
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+        owner:
+          description: 'comment owner'
+          required: true
+        repo:
+          description: 'comment repo'
+          required: true
+        comment_id:
+          description: 'comment ID'
+          required: true
+
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('{0}|{1}|{2}', inputs.owner, inputs.repo, inputs.comment_id) || '' }}
+# run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', inputs.deployment_git_rev, inputs.environments, inputs.services) || '' }}
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
     permissions: write-all # git permissions to this job or you can't create a release in the following step
@@ -7,9 +21,36 @@ jobs:
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
     # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
-      - name: Get Tag Name
+      - name: Print the input tag to STDOUT
+        run: | 
+          echo  The comment_id is ${{ inputs.comment_id }} 
+          echo  The owner is ${{ inputs.owner }} 
+          echo  The repo is ${{ inputs.repo }} 
+      - name: Checkout Codes # clone all Github codes to container
+        uses: actions/checkout@v4
+      - name: Main Step to get Verilog Top # cat all verilog files into one file
         run: |
-          tag_name=${GITHUB_REF#refs/tags/}
-          mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
-          echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
-          echo "MID_PART=${mid_part}" >> $GITHUB_ENV
+          cat ${{ github.workspace }}/README.md  
+      # - name: Create comment
+      #   uses: peter-evans/create-or-update-comment@v3
+      #   with:
+      #     issue-number: 22
+      #     body: |
+      #       This is a multi-line test comment
+      #       - With GitHub **Markdown** :sparkles:
+      #       - Created by [create-or-update-comment][1]
+
+      #       [1]: https://github.com/peter-evans/create-or-update-comment
+      #     reactions: '+1'
+      # - name: Add reactions
+      #   uses: peter-evans/create-or-update-comment@v3
+      #   with:
+      #     # comment-id: 1849268462 
+      #     comment-id: inputs.comment_id # trigger workflow run failure 
+      #     reactions: |
+      #       hooray
+      #       hooray
+      #       hooray
+      #       hooray
+      #       hooray
+      #       hooray
