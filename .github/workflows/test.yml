@@ -28,7 +28,7 @@ jobs:
           echo  The repo is ${{ inputs.repo }} 
       - name: Checkout Codes # clone all Github codes to container
         uses: actions/checkout@v4
-      - name: Main Step to get Verilog Top # cat all verilog files into one file
+      - name: cat README contents # cat all verilog files into one file
         run: |
           cat ${{ github.workspace }}/README.md  
       # - name: Create comment
