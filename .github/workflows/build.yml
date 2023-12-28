@@ -65,14 +65,6 @@ jobs:
           name: verilog-file # set download target
       - name: View content # show all contents in download file
         run: ls -R
-      # - name: Create GitHub release # create a Github release
-      #   id: create-new-release # set ID for this step, will be use later
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ env.RELEASE_VERSION }}
-      #     release_name: Release ${{ env.RELEASE_VERSION }}
       - name: Create GitHub release # create a Github release
         id: create-new-release
         uses: ncipollo/release-action@v1
@@ -80,20 +72,5 @@ jobs:
           artifacts: "./top.v"
           makeLatest: true
           allowUpdates: true
-        # id: create-new-release # set ID for this step, will be use later
-        # uses: elgohr/Github-Release-Action@v5
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        # with:
-        #   title: ${{ env.RELEASE_VERSION }}
       - name: show url 
         run: echo ${{ steps.create-new-release.outputs.html_url}}
-      # - name: Upload release asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-      #     asset_path: ./top.v # source file for release
-      #     asset_name: verilog-top.v # name of release
-      #     asset_content_type: text/plain
