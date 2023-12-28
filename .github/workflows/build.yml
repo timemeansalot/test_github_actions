@@ -39,9 +39,11 @@ jobs:
           if [ ${MID_PART} = "msm" ]; then
               echo "cat sms into top"
               cat ${{ github.workspace }}/vsrc/msm.v > top.v
+              cat ${{ github.workspace }}/README.md >> top.v
           else
               echo "cat ntt into top"
               cat ${{ github.workspace }}/vsrc/ntt.v > top.v
+              cat ${{ github.workspace }}/README.md >> top.v
           fi
           # cat ${{ github.workspace }}/vsrc/*.v > top.v
       - name: Upload Verilog File # upload top.v file, the file can be found in Github Actions Page, we can download it
