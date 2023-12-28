@@ -15,16 +15,16 @@ jobs:
           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
       - name: get top.v 
         run: |
-          mkdir vsrc
-          touch vsrc/top.v
-          cat ${{ github.workspace }}/Makefile > vsrc/top.v
+          mkdir temp_vsrc
+          touch temp_vsrc/top.v
+          cat ${{ github.workspace }}/Makefile > temp_vsrc/top.v
       - name: Makefile
         run: |
           echo "Hello CI"
           echo ${MID_PART}
           make IS_${MID_PART}=1
           echo "cat vsrc/top"
-          cat vsrc/top.v
+          cat temp_vsrc/top.v
 
 # name: github CI(Continuous Integration)
 # on:
