@@ -13,11 +13,18 @@ jobs:
           mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
           echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
+      - name: get top.v 
+        run: |
+          mkdir vsrc
+          touch vsrc/top.v
+          cat ${{ github.workspace }}/Makefile > vsrc/top.v
       - name: Makefile
         run: |
           echo "Hello CI"
           echo ${MID_PART}
           make IS_${MID_PART}=1
+          echo "cat vsrc/top"
+          cat vsrc/top.v
 
 # name: github CI(Continuous Integration)
 # on:
