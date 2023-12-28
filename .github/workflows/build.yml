@@ -1,78 +1,86 @@
-# name: Releases
-# on:
-#   push:
-#     tags:
-#     - '*'
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     permissions:
-#       contents: write
-#     steps:
-#     - uses: actions/checkout@v3
-#     - uses: ncipollo/release-action@v1
-name: github CI(Continuous Integration)
-on:
-  push:
-    # Pattern matched against refs/tags
-    tags:
-      - 'release-\w+-\w+' # Push events to match release-kernel-version
+name: SimpleTest CI
+on: push
 jobs:
-  build-project: # first job: create Verilog file and upload to Github Actions Page
-    permissions: write-all # git permissions to this job or you can't create a release in the following step
-    name: build-project # job name which will show in Github
-    runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
-    # container: node:17.6.0 # setup node version in docker container
-    steps: # define a list of steps of this job
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
       - name: Get Tag Name
         run: |
           tag_name=${GITHUB_REF#refs/tags/}
           mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
           echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
-      - name: Checkout Codes # clone all Github codes to container
-        uses: actions/checkout@v4
-      - name: Main Step to get Verilog Top # cat all verilog files into one file
+      - name: Makefile
         run: |
-          ls ${{ github.workspace }}/vsrc  
-          touch top.v
-          if [ ${MID_PART} = "msm" ]; then
-              echo "cat sms into top"
-              cat ${{ github.workspace }}/vsrc/msm.v > top.v
-              cat ${{ github.workspace }}/README.md >> top.v
-          else
-              echo "cat ntt into top"
-              cat ${{ github.workspace }}/vsrc/ntt.v > top.v
-              cat ${{ github.workspace }}/README.md >> top.v
-          fi
-          # cat ${{ github.workspace }}/vsrc/*.v > top.v
-      - name: Upload Verilog File # upload top.v file, the file can be found in Github Actions Page, we can download it
-        uses: actions/upload-artifact@v3
-        with:
-          name: verilog-file # this name will be used later
-          path: top.v
-  release-project: # second job: download Verilog file and Create a Github Release
-    # permissions: write-all # git permissions to this job or you can't create a release in the following step
-    permissions:
-      contents: write
-    name: release-project
-    runs-on: ubuntu-latest
-    needs: build-project # dependency project
-    steps:
-      - name: Get Tage Name
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - name: Download Verilog content
-        uses: actions/download-artifact@v3
-        with:
-          name: verilog-file # set download target
-      - name: View content # show all contents in download file
-        run: ls -R
-      - name: Create GitHub release # create a Github release
-        id: create-new-release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "./top.v"
-          makeLatest: true
-          allowUpdates: true
-      - name: show url 
-        run: echo ${{ steps.create-new-release.outputs.html_url}}
+          echo "Hello CI"
+          echo ${MID_PART}
+          make IS_${MID_PART}=1
+
+# name: github CI(Continuous Integration)
+# on:
+#   push:
+#     # Pattern matched against refs/tags
+#     tags:
+#       - 'release-\w+-\w+' # Push events to match release-kernel-version
+# jobs:
+#   build-project: # first job: create Verilog file and upload to Github Actions Page
+#     permissions: write-all # git permissions to this job or you can't create a release in the following step
+#     name: build-project # job name which will show in Github
+#     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
+#     # container: node:17.6.0 # setup node version in docker container
+#     steps: # define a list of steps of this job
+#       - name: Get Tag Name
+#         run: |
+#           tag_name=${GITHUB_REF#refs/tags/}
+#           mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/')
+#           echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
+#           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
+#       - name: Checkout Codes # clone all Github codes to container
+#         uses: actions/checkout@v4
+#       - name: Main Step to get Verilog Top # cat all verilog files into one file
+#         run: |
+#           ls ${{ github.workspace }}/vsrc
+#           touch top.v
+#           if [ ${MID_PART} = "msm" ]; then
+#               echo "cat sms into top"
+#               cat ${{ github.workspace }}/vsrc/msm.v > top.v
+#               cat ${{ github.workspace }}/README.md >> top.v
+#           else
+#               echo "cat ntt into top"
+#               cat ${{ github.workspace }}/vsrc/ntt.v > top.v
+#               cat ${{ github.workspace }}/README.md >> top.v
+#           fi
+#           # cat ${{ github.workspace }}/vsrc/*.v > top.v
+#       - name: Upload Verilog File # upload top.v file, the file can be found in Github Actions Page, we can download it
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: verilog-file # this name will be used later
+#           path: top.v
+#   release-project: # second job: download Verilog file and Create a Github Release
+#     # permissions: write-all # git permissions to this job or you can't create a release in the following step
+#     permissions:
+#       contents: write
+#     name: release-project
+#     runs-on: ubuntu-latest
+#     needs: build-project # dependency project
+#     steps:
+#       - name: Get Tage Name
+#         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+#       - name: Download Verilog content
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: verilog-file # set download target
+#       - name: View content # show all contents in download file
+#         run: ls -R
+#       - name: Create GitHub release # create a Github release
+#         id: create-new-release
+#         uses: ncipollo/release-action@v1
+#         with:
+#           artifacts: "./top.v"
+#           makeLatest: true
+#           allowUpdates: true
+#       - name: show url
+#         run: echo ${{ steps.create-new-release.outputs.html_url}}
