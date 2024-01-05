@@ -1,0 +1,36 @@
+name: test submodules
+on: push
+jobs:
+  build-project: # first job: create Verilog file and upload to Github Actions Page
+    permissions: write-all # git permissions to this job or you can't create a release in the following step
+    name: build-project # job name which will show in Github
+    runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
+    steps: # define a list of steps of this job
+      - name: Checkout Codes # clone all Github codes to container
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      # - uses: webfactory/ssh-agent@v0.7.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.cysic }}
+      # - name: init submodules
+      #   run: |
+      #     ls ${{ github.workspace}}
+      #     # echo "============================"
+      #     eval `ssh-agent -s`
+      #     echo "============================"
+      #     ssh-add - <<< '${{ secrets.server }}'
+      #     echo "============================"
+      #     make init
+      #     echo "============================"
+      #     ls ${{ github.workspace}}
+      # - name: chisel2verilog
+      #   run: |
+      #     make verilator IS_MSM=1 EC_LEN=1024
+      #     # make verilator IS_MSM=1  # equal to make verilog IS_MSM=1, IS_NTT=1
+      # - name: cat all verilog into top.v # cat all verilog files into one file
+      #   run: |
+      #     ls ${{ github.workspace }}/vsrc
+      #     touch top.v
+      #     cat ${{ github.workspace }}/vsrc/*.v > top.v
+      #     cat top.v
