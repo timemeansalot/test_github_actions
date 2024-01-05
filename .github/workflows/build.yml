@@ -11,6 +11,7 @@ jobs:
         run: |
           tag_name=${GITHUB_REF#refs/tags/}
           mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/' | tr '[:lower:]' '[:upper:]')
+          echo ${mid_part}
           echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
           echo "MID_PART=${mid_part}" >> $GITHUB_ENV
       # - name: get top.v 
