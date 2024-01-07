@@ -1,22 +1,23 @@
 name: trigger by REST API
-on: 
+on:
   workflow_dispatch:
     inputs:
-        owner:
-          description: 'comment owner'
-          required: true
-        repo:
-          description: 'comment repo'
-          required: true
-        comment_id:
-          description: 'comment ID'
-          required: true
-        event_type:
-          description: 'comment ID'
-          required: true
-
+      owner:
+        description: 'comment owner'
+        required: true
+      repo:
+        description: 'comment repo'
+        required: true
+      comment_id:
+        description: 'comment ID'
+        required: true
+      event_type:
+        description: 'trigger event_type'
+        required: true
+      make_command:
+        description: 'make script command'
+        required: true
 run-name: ${{ github.event_name == 'workflow_dispatch' && format('{0}|{1}|{2}|{3}', inputs.owner, inputs.repo, inputs.comment_id, inputs.event_type) || '' }}
-# run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual {0} | {1} | {2}', inputs.deployment_git_rev, inputs.environments, inputs.services) || '' }}
 jobs:
   build-project: # first job: create Verilog file and upload to Github Actions Page
     permissions: write-all # git permissions to this job or you can't create a release in the following step
@@ -24,37 +25,51 @@ jobs:
     runs-on: ubuntu-latest # define the OS which the jobs runs on, must be defined for each job not the whole workflow
     # container: node:17.6.0 # setup node version in docker container
     steps: # define a list of steps of this job
-      - name: Print the input tag to STDOUT
-        run: | 
-          echo  The owner is ${{ inputs.owner }} 
-          echo  The repo is ${{ inputs.repo }} 
-          echo  The comment_id is ${{ inputs.comment_id }} 
-          echo  The event_type is ${{ inputs.event_type }} 
+      # - name: Get Tag Name
+      #   run: |
+      #     tag_name=${GITHUB_REF#refs/tags/}
+      #     mid_part=$(echo "$tag_name" | sed 's/^.*-\(.*\)-.*$/\1/' | tr '[:lower:]' '[:upper:]')
+      #     echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
+      #     echo "MID_PART=${mid_part}" >> $GITHUB_ENV
       - name: Checkout Codes # clone all Github codes to container
         uses: actions/checkout@v4
-      - name: cat README contents # cat all verilog files into one file
-        run: |
-          cat ${{ github.workspace }}/README.md  
-      # - name: Create comment
-      #   uses: peter-evans/create-or-update-comment@v3
-      #   with:
-      #     issue-number: 22
-      #     body: |
-      #       This is a multi-line test comment
-      #       - With GitHub **Markdown** :sparkles:
-      #       - Created by [create-or-update-comment][1]
+      - name: chisel2verilog
+        run: make inputs.make_command
+        # run: make verilog IS_${MID_PART}=1 # equal to make verilog IS_MSM=1, IS_NTT=1
+  #     - name: cat all verilog into top.v # cat all verilog files into one file
+  #       run: |
+  #         ls ${{ github.workspace }}/vsrc
+  #         touch top.v
+  #         cat ${{ github.workspace }}/vsrc/*.v > top.v
+  #         cat top.v
+  #     - name: Upload Verilog File # upload top.v file, the file can be found in Github Actions Page, we can download it
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: verilog-file # this name will be used later
+  #         path: top.v
+  # release-project: # second job: download Verilog file and Create a Github Release
+  #   # permissions: write-all # git permissions to this job or you can't create a release in the following step
+  #   permissions:
+  #     contents: write
+  #   name: release-project
+  #   runs-on: ubuntu-latest
+  #   needs: build-project # dependency project
+  #   steps:
+  #     - name: Get Tage Name
+  #       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+  #     - name: Download Verilog content
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: verilog-file # set download target
+  #     - name: View content # show all contents in download file
+  #       run: ls -R
+  #     - name: Create GitHub release # create a Github release
+  #       id: create-new-release
+  #       uses: ncipollo/release-action@v1
+  #       with:
+  #         artifacts: './top.v'
+  #         makeLatest: true
+  #         allowUpdates: true
+  #     - name: show url
+  #       run: echo ${{ steps.create-new-release.outputs.html_url}}
 
-      #       [1]: https://github.com/peter-evans/create-or-update-comment
-      #     reactions: '+1'
-      # - name: Add reactions
-      #   uses: peter-evans/create-or-update-comment@v3
-      #   with:
-      #     # comment-id: 1849268462 
-      #     comment-id: inputs.comment_id # trigger workflow run failure 
-      #     reactions: |
-      #       hooray
-      #       hooray
-      #       hooray
-      #       hooray
-      #       hooray
-      #       hooray

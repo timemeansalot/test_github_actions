@@ -10,6 +10,13 @@ endif
 all:
 	echo ${NAME}
 
+hello_world:
+	echo "Hello World CI"
+	echo ${NAME}
+
+bad_word:
+	echo "Bad World CI"
+	echo ${NAME}
 
 
 # # name=$(shell date | grep -Eo "\d+:\d+:\d+" | sed 's/:/_/g')

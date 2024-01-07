@@ -1,3 +1,0 @@
-[submodule "test_ci_sub"]
-	path = test_ci_sub
-	url = git@github.com:ChipDesign/test_ci_sub.git
