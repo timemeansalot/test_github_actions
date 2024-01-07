@@ -34,7 +34,7 @@ jobs:
       - name: Checkout Codes # clone all Github codes to container
         uses: actions/checkout@v4
       - name: chisel2verilog
-        run: make inputs.make_command
+        run: make ${{inputs.make_command}}
         # run: make verilog IS_${MID_PART}=1 # equal to make verilog IS_MSM=1, IS_NTT=1
   #     - name: cat all verilog into top.v # cat all verilog files into one file
   #       run: |
