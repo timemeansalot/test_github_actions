@@ -1,11 +1,17 @@
-# name: SimpleTest CI
+name: SimpleTest CI
 # on: push
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     permissions:
-#       contents: write
-#     steps:
+on:
+  push:
+    tags:
+      - 'release-\w+-\w+' # Push events to match release-kernel-version
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name:
+        run: echo "hello world"
 #       - uses: actions/checkout@v3
 #       - name: Get Tag Name
 #         run: |
