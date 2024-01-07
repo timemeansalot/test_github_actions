@@ -10,8 +10,3 @@
 3. README On Dev Branch
 4. README On Dev Branch
 5. README On Dev Branch
-6. README On Dev Branch
-7. README On Dev Branch
-8. README On Dev Branch
-9. README On Dev Branch
-10. README On Dev Branch
